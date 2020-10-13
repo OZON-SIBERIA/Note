@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\Number;
+use App\Entity\TelNumber;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Number|null find($id, $lockMode = null, $lockVersion = null)
- * @method Number|null findOneBy(array $criteria, array $orderBy = null)
- * @method Number[]    findAll()
- * @method Number[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TelNumber|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TelNumber|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TelNumber[]    findAll()
+ * @method TelNumber[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class NumberRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Number::class);
+        parent::__construct($registry, TelNumber::class);
     }
 
     // /**

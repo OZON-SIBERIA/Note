@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CallRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CallRepository::class)
+ * @ORM\Entity()
  */
 class Call
 {
@@ -15,61 +15,39 @@ class Call
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity="TelNumber")
+     * @ORM\JoinColumn(name="number_from_id", referencedColumnName="id")
      */
-    private $number_1;
+    private TelNumber $number_1;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity="TelNumber")
+     * @ORM\JoinColumn(name="number_to_id", referencedColumnName="id")
      */
-    private $number_2;
+    private TelNumber $number_2;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $made_at;
+    private DateTime $made_at;
 
-    public function getId(): ?int
+    public function __construct(TelNumber $number_1, TelNumber $number_2)
+    {
+        $this->number_1 = $number_1;
+        $this->number_2 = $number_2;
+        $this->made_at = new DateTime();
+    }
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getNumber1(): ?string
-    {
-        return $this->number_1;
-    }
-
-    public function setNumber1(string $number_1): self
-    {
-        $this->number_1 = $number_1;
-
-        return $this;
-    }
-
-    public function getNumber2(): ?string
-    {
-        return $this->number_2;
-    }
-
-    public function setNumber2(string $number_2): self
-    {
-        $this->number_2 = $number_2;
-
-        return $this;
-    }
-
-    public function getMadeAt(): ?\DateTimeInterface
+    public function getMadeAt(): \DateTimeInterface
     {
         return $this->made_at;
-    }
-
-    public function setMadeAt(\DateTimeInterface $made_at): self
-    {
-        $this->made_at = $made_at;
-
-        return $this;
     }
 }

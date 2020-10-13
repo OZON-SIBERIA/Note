@@ -62,12 +62,12 @@ class Comment
         return $this;
     }
 
-    public function getAttachedAt(): ?Number
+    public function getAttachedAt(): ?TelNumber
     {
         return $this->attached_at;
     }
 
-    public function setAttachedAt(?Number $attached_at): self
+    public function setAttachedAt(?TelNumber $attached_at): self
     {
         $this->attached_at = $attached_at;
 
