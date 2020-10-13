@@ -28,8 +28,7 @@ class Comment
     private $created_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Number::class, inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
      */
     private $attached_at;
 
