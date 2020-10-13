@@ -18,7 +18,7 @@ class Call
     private int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="TelNumber")
+     * @ORM\ManyToOne(targetEntity="TelNumber", cascade={"persist"})
      * @ORM\JoinColumn(name="number_from_id", referencedColumnName="id")
      */
     private TelNumber $number_1;
