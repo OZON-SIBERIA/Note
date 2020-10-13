@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,11 +35,17 @@ class Call
      */
     private DateTime $made_at;
 
-    public function __construct(TelNumber $number_1, TelNumber $number_2)
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="attached_at", cascade={"all"})
+     */
+    private ArrayCollection $comments;
+
+    public function __construct(TelNumber $number_1, TelNumber $number_2, array $comments = [])
     {
         $this->number_1 = $number_1;
         $this->number_2 = $number_2;
         $this->made_at = new DateTime();
+        $this->comments = new ArrayCollection($comments);
     }
 
     public function getId(): int
