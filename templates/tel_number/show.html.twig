@@ -22,6 +22,13 @@
         </tbody>
     </table>
 
+    <ul>
+        {% for comment in tel_number.comments %}
+            <li>{{ comment.id }}</li>
+            <li>{{ comment.text }}</li>
+        {% endfor %}
+    </ul>
+
     <a href="{{ path('tel_number_index') }}">back to list</a>
 
     <a href="{{ path('tel_number_edit', {'id': tel_number.id}) }}">edit</a>

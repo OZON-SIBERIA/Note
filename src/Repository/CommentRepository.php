@@ -23,6 +23,6 @@ class CommentRepository
 
     public function findAllBy($criteria)
     {
-        return $this->entityManager->getRepository(Comment::class)->findAll($criteria);
+        return $this->entityManager->getRepository(Comment::class)->findBy($criteria);
     }
 }

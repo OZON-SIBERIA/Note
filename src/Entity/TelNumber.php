@@ -28,7 +28,7 @@ class TelNumber
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="attached_at")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="attachedAt")
      */
     private $comments;
 
@@ -60,5 +60,10 @@ class TelNumber
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

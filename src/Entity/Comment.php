@@ -6,7 +6,7 @@ use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CommentRepository::class)
+ * @ORM\Entity()
  */
 class Comment
 {
@@ -25,12 +25,12 @@ class Comment
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $attached_at;
+    private $attachedAt;
 
     public function getId()
     {
@@ -44,12 +44,12 @@ class Comment
 
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     public function getAttachedAt()
     {
-        return $this->attached_at;
+        return $this->attachedAt;
     }
 
     public function setText($text): void
@@ -57,8 +57,8 @@ class Comment
         $this->text = $text;
     }
 
-    public function setAttachedAt($attached_at): void
+    public function setAttachedAt($attachedAt): void
     {
-        $this->attached_at = $attached_at;
+        $this->attachedAt = $attachedAt;
     }
 }

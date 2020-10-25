@@ -33,5 +33,4 @@ class NumberRepository
         $this->entityManager->persist($number);
         $this->entityManager->flush();
     }
-
 }

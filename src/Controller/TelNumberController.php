@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\TelNumber;
 use App\Form\TelNumberType;
+use App\Repository\CommentRepository;
 use App\Repository\NumberRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -39,10 +40,15 @@ class TelNumberController
      * @var RouterInterface
      */
     private RouterInterface $router;
+    /**
+     * @var CommentRepository
+     */
+    private CommentRepository $commentRepository;
 
     public function __construct(
         Environment $twig,
         NumberRepository $numberRepository,
+        CommentRepository $commentRepository,
         FormFactoryInterface $formFactory,
         ManagerRegistry $registry,
         RouterInterface $router
@@ -52,6 +58,7 @@ class TelNumberController
         $this->formFactory = $formFactory;
         $this->registry = $registry;
         $this->router = $router;
+        $this->commentRepository = $commentRepository;
     }
 
     /**
@@ -90,7 +97,7 @@ class TelNumberController
     public function show(TelNumber $telNumber): Response
     {
         return new Response($this->twig->render('tel_number/show.html.twig', [
-            'tel_number' => $telNumber,
+            'tel_number' => $telNumber
         ]));
     }
 
