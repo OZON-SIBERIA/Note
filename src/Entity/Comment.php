@@ -61,4 +61,12 @@ class Comment
     {
         $this->attachedAt = $attachedAt;
     }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
 }

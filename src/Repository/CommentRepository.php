@@ -13,14 +13,14 @@ class CommentRepository
      */
     private EntityManagerInterface $entityManager;
 
-    private \DateTime $createdAt;
-
     public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->createdAt = new \DateTime();
         $this->entityManager = $entityManager;
     }
 
+    public function findAll() {
+        return $this->entityManager->getRepository(Comment::class)->findAll();
+    }
     public function findAllBy($criteria)
     {
         return $this->entityManager->getRepository(Comment::class)->findBy($criteria);
