@@ -5,24 +5,63 @@ namespace App\Controller;
 use App\Entity\TelNumber;
 use App\Form\TelNumberType;
 use App\Repository\NumberRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
 /**
  * @Route("/tel_number")
  */
-class TelNumberController extends AbstractController
+class TelNumberController
 {
+    /**
+     * @var Environment
+     */
+    private Environment $twig;
+    /**
+     * @var NumberRepository
+     */
+    private NumberRepository $numberRepository;
+    /**
+     * @var FormFactoryInterface
+     */
+    private FormFactoryInterface $formFactory;
+    /**
+     * @var ManagerRegistry
+     */
+    private ManagerRegistry $registry;
+    /**
+     * @var RouterInterface
+     */
+    private RouterInterface $router;
+
+    public function __construct(
+        Environment $twig,
+        NumberRepository $numberRepository,
+        FormFactoryInterface $formFactory,
+        ManagerRegistry $registry,
+        RouterInterface $router
+    ) {
+        $this->twig = $twig;
+        $this->numberRepository = $numberRepository;
+        $this->formFactory = $formFactory;
+        $this->registry = $registry;
+        $this->router = $router;
+    }
+
     /**
      * @Route("/", name="tel_number_index", methods={"GET"})
      */
-    public function index(NumberRepository $numberRepository): Response
+    public function index(): Response
     {
-        return $this->render('tel_number/index.html.twig', [
-            'tel_numbers' => $numberRepository->findAll(),
-        ]);
+        return new Response($this->twig->render('tel_number/index.html.twig', [
+            'tel_numbers' => $this->numberRepository->findAll(),
+        ]));
     }
 
     /**
@@ -31,21 +70,21 @@ class TelNumberController extends AbstractController
     public function new(Request $request): Response
     {
         $telNumber = new TelNumber();
-        $form = $this->createForm(TelNumberType::class, $telNumber);
+        $form = $this->formFactory->create(TelNumberType::class, $telNumber);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->registry->getManager();
             $entityManager->persist($telNumber);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tel_number_index');
+            return new RedirectResponse($this->router->generate('tel_number_index'), 302);
         }
 
-        return $this->render('tel_number/new.html.twig', [
+        return new Response($this->twig->render('tel_number/new.html.twig', [
             'tel_number' => $telNumber,
             'form' => $form->createView(),
-        ]);
+        ]));
     }
 
     /**
@@ -53,9 +92,9 @@ class TelNumberController extends AbstractController
      */
     public function show(TelNumber $telNumber): Response
     {
-        return $this->render('tel_number/show.html.twig', [
+        return new Response($this->twig->render('tel_number/show.html.twig', [
             'tel_number' => $telNumber,
-        ]);
+        ]));
     }
 
     /**
@@ -63,19 +102,19 @@ class TelNumberController extends AbstractController
      */
     public function edit(Request $request, TelNumber $telNumber): Response
     {
-        $form = $this->createForm(TelNumberType::class, $telNumber);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('tel_number_index');
-        }
-
-        return $this->render('tel_number/edit.html.twig', [
-            'tel_number' => $telNumber,
-            'form' => $form->createView(),
-        ]);
+//        $form = $this->createForm(TelNumberType::class, $telNumber);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $this->getDoctrine()->getManager()->flush();
+//
+//            return $this->redirectToRoute('tel_number_index');
+//        }
+//
+//        return $this->render('tel_number/edit.html.twig', [
+//            'tel_number' => $telNumber,
+//            'form' => $form->createView(),
+//        ]);
     }
 
     /**
@@ -83,12 +122,12 @@ class TelNumberController extends AbstractController
      */
     public function delete(Request $request, TelNumber $telNumber): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$telNumber->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($telNumber);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('tel_number_index');
+//        if ($this->isCsrfTokenValid('delete' . $telNumber->getId(), $request->request->get('_token'))) {
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->remove($telNumber);
+//            $entityManager->flush();
+//        }
+//
+//        return $this->redirectToRoute('tel_number_index');
     }
 }
