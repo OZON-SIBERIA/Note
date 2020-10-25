@@ -25,4 +25,13 @@ class NumberRepository
         return $this->entityManager->getRepository(TelNumber::class)->findAll();
     }
 
+    /**
+     * @param TelNumber $number
+     */
+    public function save(TelNumber $number): void
+    {
+        $this->entityManager->persist($number);
+        $this->entityManager->flush();
+    }
+
 }

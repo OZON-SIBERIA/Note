@@ -74,10 +74,7 @@ class TelNumberController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->registry->getManager();
-            $entityManager->persist($telNumber);
-            $entityManager->flush();
-
+            $this->numberRepository->save($telNumber);
             return new RedirectResponse($this->router->generate('tel_number_index'), 302);
         }
 
