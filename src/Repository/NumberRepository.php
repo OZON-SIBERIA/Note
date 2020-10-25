@@ -3,48 +3,26 @@
 namespace App\Repository;
 
 use App\Entity\TelNumber;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
-/**
- * @method TelNumber|null find($id, $lockMode = null, $lockVersion = null)
- * @method TelNumber|null findOneBy(array $criteria, array $orderBy = null)
- * @method TelNumber[]    findAll()
- * @method TelNumber[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class NumberRepository extends ServiceEntityRepository
+class NumberRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    /**
+     * @var EntityManagerInterface
+     */
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, TelNumber::class);
+        $this->entityManager = $entityManager;
     }
 
-    // /**
-    //  * @return Number[] Returns an array of Number objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return TelNumber[]
+     */
+    public function findAll(): array
     {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('n.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->entityManager->getRepository(TelNumber::class)->findAll();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Number
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

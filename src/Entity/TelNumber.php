@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\NumberRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=NumberRepository::class)
+ * @ORM\Entity()
  */
 class TelNumber
 {
