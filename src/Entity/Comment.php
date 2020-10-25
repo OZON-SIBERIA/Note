@@ -32,6 +32,12 @@ class Comment
      */
     private $attachedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TelNumber", inversedBy="comments")
+     * @ORM\JoinColumn(referencedColumnName="id", name="attached_at")
+     */
+    private $telNumber;
+
     public function getId()
     {
         return $this->id;

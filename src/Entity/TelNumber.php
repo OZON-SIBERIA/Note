@@ -28,7 +28,7 @@ class TelNumber
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="attachedAt")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="telNumber")
      */
     private $comments;
 
