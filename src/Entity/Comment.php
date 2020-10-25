@@ -32,44 +32,33 @@ class Comment
      */
     private $attached_at;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getText(): ?string
+    public function getText()
     {
         return $this->text;
     }
 
-    public function setText(string $text): self
-    {
-        $this->text = $text;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt()
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    public function getAttachedAt(): ?TelNumber
+    public function getAttachedAt()
     {
         return $this->attached_at;
     }
 
-    public function setAttachedAt(?TelNumber $attached_at): self
+    public function setText($text): void
+    {
+        $this->text = $text;
+    }
+
+    public function setAttachedAt($attached_at): void
     {
         $this->attached_at = $attached_at;
-
-        return $this;
     }
 }

@@ -37,41 +37,26 @@ class TelNumber
         $this->comments = new ArrayCollection();
     }
 
-    /**
-     * @param mixed $number
-     */
     public function setNumber($number): void
     {
         $this->number = $number;
     }
 
-    /**
-     * @param mixed $name
-     */
     public function setName($name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
     public function getNumber()
     {
         return $this->number;
     }
 
-    /**
-     * @return mixed
-     */
     public function getName()
     {
         return $this->name;
