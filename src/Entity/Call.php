@@ -22,13 +22,13 @@ class Call
      * @ORM\ManyToOne(targetEntity="TelNumber", cascade={"persist"})
      * @ORM\JoinColumn(name="number_from_id", referencedColumnName="id")
      */
-    private TelNumber $number_1;
+    private TelNumber $number_from;
 
     /**
      * @ORM\ManyToOne(targetEntity="TelNumber", cascade={"persist"})
      * @ORM\JoinColumn(name="number_to_id", referencedColumnName="id")
      */
-    private TelNumber $number_2;
+    private TelNumber $number_to;
 
     /**
      * @ORM\Column(type="datetime")
@@ -40,10 +40,10 @@ class Call
      */
     private ArrayCollection $comments;
 
-    public function __construct(TelNumber $number_1, TelNumber $number_2, array $comments = [])
+    public function __construct(TelNumber $number_from, TelNumber $number_to, array $comments = [])
     {
-        $this->number_1 = $number_1;
-        $this->number_2 = $number_2;
+        $this->number_from = $number_from;
+        $this->number_to = $number_to;
         $this->made_at = new DateTime();
         $this->comments = new ArrayCollection($comments);
     }
@@ -57,4 +57,29 @@ class Call
     {
         return $this->made_at;
     }
+
+    /**
+     * @param DateTime $made_at
+     */
+    public function setMadeAt(DateTime $made_at): void
+    {
+        $this->made_at = $made_at;
+    }
+
+    /**
+     * @param TelNumber $number_from
+     */
+    public function setNumberFrom(TelNumber $number_from): void
+    {
+        $this->number_from = $number_from;
+    }
+
+    /**
+     * @param TelNumber $number_to
+     */
+    public function setNumberTo(TelNumber $number_to): void
+    {
+        $this->number_to = $number_to;
+    }
+    
 }
