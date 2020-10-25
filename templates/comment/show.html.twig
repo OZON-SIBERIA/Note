@@ -16,12 +16,8 @@
                 <td>{{ comment.text }}</td>
             </tr>
             <tr>
-                <th>Created_at</th>
+                <th>CreatedAt</th>
                 <td>{{ comment.createdAt ? comment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Attached_at</th>
-                <td>{{ comment.attachedAt }}</td>
             </tr>
         </tbody>
     </table>

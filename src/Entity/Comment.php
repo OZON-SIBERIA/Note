@@ -28,11 +28,6 @@ class Comment
     private $createdAt;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $attachedAt;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TelNumber", inversedBy="comments")
      * @ORM\JoinColumn(referencedColumnName="id", name="attached_at")
      */
@@ -53,9 +48,12 @@ class Comment
         return $this->createdAt;
     }
 
-    public function getAttachedAt()
+    /**
+     * @return mixed
+     */
+    public function getTelNumber()
     {
-        return $this->attachedAt;
+        return $this->telNumber;
     }
 
     public function setText($text): void
@@ -63,16 +61,16 @@ class Comment
         $this->text = $text;
     }
 
-    public function setAttachedAt($attachedAt): void
-    {
-        $this->attachedAt = $attachedAt;
-    }
-
-    /**
-     * @param mixed $createdAt
-     */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @param mixed $telNumber
+     */
+    public function setTelNumber($telNumber): void
+    {
+        $this->telNumber = $telNumber;
     }
 }

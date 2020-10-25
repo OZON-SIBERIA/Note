@@ -14,7 +14,7 @@ class CommentType extends AbstractType
         $builder
             ->add('text')
             ->add('createdAt')
-            ->add('attachedAt')
+            ->add('telNumber')
         ;
     }
 

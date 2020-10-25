@@ -66,4 +66,9 @@ class TelNumber
     {
         return $this->comments;
     }
+
+    public function __toString()
+    {
+        return (string)$this->number;
+    }
 }
