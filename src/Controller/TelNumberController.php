@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Twig\Environment;
 
 /**
@@ -44,6 +46,10 @@ class TelNumberController
      * @var CommentRepository
      */
     private CommentRepository $commentRepository;
+    /**
+     * @var CsrfTokenManagerInterface
+     */
+    private CsrfTokenManagerInterface $csrfTokenManager;
 
     public function __construct(
         Environment $twig,
@@ -51,14 +57,17 @@ class TelNumberController
         CommentRepository $commentRepository,
         FormFactoryInterface $formFactory,
         ManagerRegistry $registry,
-        RouterInterface $router
-    ) {
+        RouterInterface $router,
+        CsrfTokenManagerInterface $csrfTokenManager
+    )
+    {
         $this->twig = $twig;
         $this->numberRepository = $numberRepository;
         $this->formFactory = $formFactory;
         $this->registry = $registry;
         $this->router = $router;
         $this->commentRepository = $commentRepository;
+        $this->csrfTokenManager = $csrfTokenManager;
     }
 
     /**
@@ -106,19 +115,18 @@ class TelNumberController
      */
     public function edit(Request $request, TelNumber $telNumber): Response
     {
-//        $form = $this->createForm(TelNumberType::class, $telNumber);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $this->getDoctrine()->getManager()->flush();
-//
-//            return $this->redirectToRoute('tel_number_index');
-//        }
-//
-//        return $this->render('tel_number/edit.html.twig', [
-//            'tel_number' => $telNumber,
-//            'form' => $form->createView(),
-//        ]);
+        $form = $this->formFactory->create(TelNumberType::class, $telNumber);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->numberRepository->save($telNumber);
+            return new RedirectResponse($this->router->generate('tel_number_index'), 302);
+        }
+
+        return new Response($this->twig->render('tel_number/edit.html.twig', [
+            'tel_number' => $telNumber,
+            'form' => $form->createView(),
+        ]));
     }
 
     /**
@@ -126,12 +134,14 @@ class TelNumberController
      */
     public function delete(Request $request, TelNumber $telNumber): Response
     {
-//        if ($this->isCsrfTokenValid('delete' . $telNumber->getId(), $request->request->get('_token'))) {
-//            $entityManager = $this->getDoctrine()->getManager();
-//            $entityManager->remove($telNumber);
-//            $entityManager->flush();
-//        }
-//
-//        return $this->redirectToRoute('tel_number_index');
+        if ($this->csrfTokenManager->isTokenValid(
+            new CsrfToken('delete' . $telNumber->getId(),
+                $request->get('_token'))
+        )
+        ) {
+            $this->numberRepository->delete($telNumber);
+        }
+
+        return new RedirectResponse($this->router->generate('tel_number_index'), 302);
     }
 }

@@ -21,10 +21,9 @@
             </tr>
         </tbody>
     </table>
-
+    <a>Комментарии к номеру</a>
     <ul>
         {% for comment in tel_number.comments %}
-            <li>{{ comment.id }}</li>
             <li>{{ comment.text }}</li>
         {% endfor %}
     </ul>

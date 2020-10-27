@@ -33,4 +33,11 @@ class NumberRepository
         $this->entityManager->persist($number);
         $this->entityManager->flush();
     }
+
+    public function delete(TelNumber $number)
+    {
+
+        $this->entityManager->remove($number);
+        $this->entityManager->flush();
+    }
 }
