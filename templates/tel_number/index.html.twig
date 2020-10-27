@@ -1,18 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}TelNumber index{% endblock %}
-
+{% block header %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Note</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/tel_number">TelNumbers <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/comment">Comments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/call">Calls</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
 {% block body %}
     <h1>TelNumber index</h1>
 
+    <a href="{{ path('tel_number_new') }}">Create new</a>
+
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Number</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Number</th>
+            <th>Name</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for tel_number in tel_numbers %}
@@ -33,5 +56,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('tel_number_new') }}">Create new</a>
 {% endblock %}
